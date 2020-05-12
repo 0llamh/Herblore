@@ -7,8 +7,6 @@ import xlsxwriter
 
 
 def write(herb):
-    # todo: check to see if file is currently opened. Returns errors and corrupts file if unchecked in writing.
-
     h = [herb.name, herb.origin, herb.rarity, herb.color, herb.texture, herb.use, herb.delivery, herb.expiration]
 
     if path.exists('Herbs.xlsx'):
