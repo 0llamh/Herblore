@@ -42,13 +42,13 @@ def write(herb):
         worksheet = workbook.add_worksheet('Herbs.xlsx')
         worksheet.write_row(0, 0, header, headerformat)       # fill row 1, starting at column 1, with Header values
         worksheet.write_row(1, 0, h)            # write row 2, starting at column 1, with herb values
-        # todo: create readme page explaining in-program sorting. Not supported by xlsxwriter or python.
 
     worksheet.set_row(0, 40)  # set row 1 height to 40
     worksheet.set_column('A:A', 30)  # set name column width to 2.0
     worksheet.set_column('B:B', 20)  # origin column
-    worksheet.set_column('C:C', 8)   # rarity
+    worksheet.set_column('C:C', 10)  # rarity
     worksheet.set_column('D:H', 15)  # color, texture, use, deliver, expiration
+    worksheet.autofilter('A1:D11')   # filter functionality in the headers for easy sorting
 
     # todo: implement parser to each herb row with specific background colors
 
