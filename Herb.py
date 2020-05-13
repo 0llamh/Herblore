@@ -38,10 +38,10 @@ class Herb:
         return h_color
 
     def getType(self):
-        herbs = ["Bark", "Berry", "Blossom", "Bulb", "Cap", "Flower", "Fruit", "Frond", "Leaf", "Lily", "Lotus", "Moss",
-                 "Mushroom", "Needle", "Nut", "Pollen", "Petal", "Root", "Rose", "Sap", "Seed", "Stalk", "Stem", "Thorn",
-                 "Tulip", "Vine", "Weed"]
-        herbs_rand = random.randint(0, 26)
+        herbs = ["Bark", "Berry", "Blossom", "Bulb", "Flower", "Fruit", "Frond", "Grass", "Leaf", "Lily",
+                 "Lotus", "Moss", "Mushroom", "Needle", "Nut", "Pollen", "Petal", "Root", "Rose", "Sap", "Seed",
+                 "Stalk", "Stem", "Thorn", "Tulip", "Vine", "Weed"]
+        herbs_rand = random.randint(0, 25)
         h_type = herbs[herbs_rand]
         return h_type
 
@@ -68,11 +68,11 @@ class Herb:
             h_name += adjectives[adj_rand] + " "        # Appends adjective to full name string
 
         # Generate descriptive noun -- SEPARATE FROM HERB TYPE from getType()
-        nouns = ['Dawn', 'Dusk', 'Fire', 'Grave', 'Ice', 'Moon', 'Morning', 'Mountain', 'Muck', 'Mud', 'Night', 'Raid',
-                 'Rock', 'Sand', 'Shadow', 'Sun', 'Swamp', 'Water', 'Wind']
+        nouns = ['Cliff', 'Dawn', 'Dusk', 'Fire', 'Grave', 'Ice', 'Moon', 'Morning', 'Mountain', 'Muck', 'Mud',
+                 'Night', 'Rain', 'Rock', 'Sand', 'Song', 'Shadow', 'Sun', 'Swamp', 'Water', 'Wind']
         if add_noun_descriptor == 1:
             while True:
-                noun_rand = random.randint(0, 18)
+                noun_rand = random.randint(0, 20)
                 if nouns[noun_rand] != t:
                     break
             h_name += nouns[noun_rand] + t.lower()
@@ -82,31 +82,25 @@ class Herb:
         return h_name
 
     def getOrigin(self, n):
-        origins = "Tundra", "Desert", "Jungle or Swamp", "Forestation", "Mountains", "Grasslands", "Underground", "Fresh Water", "Salt Water"
-
-        # todo: polish up fresh water and salt water filtering
+        h_origin = ''
+        origins = ['Ice and Snow', 'Forestation', 'Marshes and Swamps', 'Grass', 'Lakes and Rivers', 'Underground',
+                   'Bushes and Shrubs', 'Desert', 'Mountains and Cliffs']
+        # todo: filter out terrains based on type and adjectives
         # Run a loop to ensure name corroborates its origin
-        if ("Arctic" in n) or ("Ice" in n) or ("Frozen" in n):
-            h_origin = "Tundra"
-        elif ("Swamp" in n) or ("Muck" in n):
-            h_origin = "Jungle or Swamp"
-        elif "Mountain" in n:
-            h_origin = "Mountains"
-        elif ("Bark" in n) or ("Sap" in n) or ("Moss" in n) or ("Vine" in n):
-            while True:
-                origin_rand = random.randint(0, 8)
-                h_origin = origins[origin_rand]
-                if h_origin == "Forestation" or h_origin == "Jungle or Swamp":
-                    break
-        else:
-            while True:
-                origin_rand = random.randint(0, 8)
-                h_origin = origins[origin_rand]
-                if ("Water" in h_origin) and (("Bark" in n) or ("Sap" in n) or ("Pollen" in n)):
-                    continue
-                else:
-                    break
-
+        while h_origin == '':
+            roll_origin = random.randint(0, 8)
+            if ('Arctic' in n) or ('Frozen' in n) or ('Ice' in n):
+                h_origin = 'Ice and Snow'
+            elif ('Bark' in n) or ('Sap' in n):
+                h_origin = 'Forestation'
+            elif ('Muck' in n) or ('Mud' in n) or ('Swamp' in n):
+                h_origin = 'Marshes and Swamps'
+            elif ('Mountain' in n) or ('Cliff' in n):
+                h_origin = 'Mountains and Cliffs'
+            elif ('Rain' in n) and (roll_origin == 5 or roll_origin == 7):
+                continue        # rain doesn't occur underground or desert
+            else:
+                h_origin = origins[roll_origin]
         return h_origin
 
     def getRarity(self):
@@ -115,13 +109,6 @@ class Herb:
         rarity += dc       # appends random value
 
         return rarity
-
-    def getPrep(self, type, use):
-        h_preparation = "in some way"
-        # todo how it alchemically prepared (should align with herb type and use)
-        preps = ['a thick paste', 'a thin paste', 'a rough powder', 'a fine powder', 'an oily liquid',
-                 'a thick, gloopy liquid', '']
-        return h_preparation
 
     def getUse(self):
         # todo more uses and effects
@@ -144,8 +131,15 @@ class Herb:
         elif h_use == 'a drug':
             r_drug = random.randint(0, 3)
             drugs   = ['euphoriant', 'sensory stimulant', 'steroid', 'hallucinogen']
-            h_use += " commonly as a " + drugs[r_drug]
+            h_use += " commonly used as a " + drugs[r_drug]
         return h_use
+
+    def getPrep(self, type, use):
+        h_preparation = "in some way"
+        # todo how it alchemically prepared (should align with herb type and use)
+        preps = ['a thick paste', 'a thin paste', 'a rough powder', 'a fine powder', 'an oily liquid',
+                 'a thick, gloopy liquid', '']
+        return h_preparation
 
     def getExpiration(self):
         h_expiration = "best if used "

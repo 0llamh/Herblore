@@ -7,7 +7,7 @@ import xlsxwriter
 
 
 def write(herb):
-    h = [herb.name, herb.origin, herb.rarity, herb.color, herb.texture, herb.use, herb.delivery, herb.expiration]
+    h = [herb.name, herb.origin, herb.rarity, herb.color, herb.type, herb.use, herb.delivery, herb.expiration]
 
     if path.exists('Herbs.xlsx'):
         # print('Herbs.xlsx already exists.')
