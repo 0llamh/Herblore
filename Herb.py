@@ -11,8 +11,8 @@ class Herb:
         self.name = self.getName(self.color)
         self.origin = self.getOrigin(self.name)
         self.rarity = self.getRarity()
-        self.texture = self.getTexture(self.name)
         self.use = self.getUse()
+        self.preparation = self.getPrep(self.name, self.use)
         self.expiration = self.getExpiration()
         self.delivery = self.getDelivery()
 
@@ -103,23 +103,47 @@ class Herb:
 
         return rarity
 
-    def getTexture(self, n):
-        h_texture = ""
-        # todo texture
-
-        return h_texture
+    def getPrep(self, name, use):
+        h_preparation = "in some way"
+        # todo how it alchemically prepared (should align with herb type and use)
+        preps = ['a thick paste', 'a thin paste', 'a rough powder', 'a fine powder', 'an oily liquid',
+                 'a thick, gloopy liquid', '']
+        return h_preparation
 
     def getUse(self):
-        h_use = ""
-        # todo use
-
+        h_use = "use and effect"
+        # todo more uses and effects
+        r_use = random.randint(0, 2)    # get use
+        use = ['an ailment', 'a poison', 'a drug']
+        h_use = use[r_use]
+        if h_use == 'an ailment':
+            r_potion = random.randint(0, 9)
+            potions = ['to stop bleeding', 'to relieve pain', 'to sterilize a wound or object', 'to lower a fever',
+                       'as a respiratory adrenal agent', 'to soothe rashes and hives', 'as a decongestant',
+                       'as a burn agent', 'as an antivenom', 'as a anti-paralytic']
+            h_use += " " + potions[r_potion]
+        elif h_use == 'a poison':
+            r_poison = random.randint(0, 17)
+            poisons = ['blood thinning', 'headaches', 'body aches', 'an infection', 'fevers and chills',
+                       'respiratory inflammation', 'blurry vision or blindness', 'painful rashes and hives',
+                       'impaired motor function or paralyzing agent', 'amnesia', 'drowsiness', 'paranoia', 'insomnia',
+                       'impotence', 'infertility', 'laxadation', 'vomiting', 'muscle death']
+            h_use += " that causes " + poisons[r_poison]
+        elif h_use == 'a drug':
+            r_drug = random.randint(0, 3)
+            drugs   = ['euphoriant', 'sensory stimulant', 'steroid', 'hallucinogen']
+            h_use += " commonly as a " + drugs[r_drug]
         return h_use
 
     def getExpiration(self):
-        h_expire = ""
-        # todo expiration
-
-        return h_expire
+        h_expiration = "best if used "
+        expirations = ['immediately', 'within hours', 'within days', 'within a year', 'no expiration']
+        rand_expire = random.randint(0, 4)
+        if rand_expire == 4:
+            h_expiration = 'with no expiration'
+        else:
+            h_expiration += expirations[rand_expire]
+        return h_expiration
 
     def getDelivery(self):
         h_deliv = ""

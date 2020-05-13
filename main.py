@@ -11,7 +11,7 @@ ui.theme('Dark Green 3')
 layout = [[ui.Text('Generate an herb!')],
           [ui.Button('Create Herb'), ui.Button('Export')],
           [ui.Text(size=(30, 1), key="name", font=('Helvetica', 15, 'bold')), ui.Text(size=(15, 1), key="rarity")],
-          [ui.Text(size=(50, 1), key="description")]]
+          [ui.Text(size=(60, 4), key="description")]]
 window = ui.Window('Herblore', layout)
 
 
@@ -26,7 +26,8 @@ def main():
             window["name"].update(h.name)
             window["rarity"].update("Herb Rarity: %i" % h.rarity)
             # todo: attribute specific descriptions based on texture and origins
-            window["description"].update("A " + h.color + " herb from the " + h.origin.lower())
+            window["description"].update("A " + h.color + " herb from " + h.origin.lower() + " that is prepared "
+                                         + h.preparation + " as " + h.use + " " + h.expiration + ".")
         elif event in 'Export':
             try:
                 if lastevent == event:      # if both last and current events were exports
