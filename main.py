@@ -26,8 +26,9 @@ def main():
             window["name"].update(h.name)
             window["rarity"].update("Herb Rarity: %i" % h.rarity)
             # todo: attribute specific descriptions based on texture and origins
-            window["description"].update("A " + h.color + " herb from " + h.origin.lower() + " that is prepared "
-                                         + h.preparation + " as " + h.use + " " + h.expiration + ".")
+            window["description"].update("A " + h.color + " " + h.type + " from " + h.origin.lower() +
+                                         " that is prepared " + h.preparation + " for " + h.use + " " +
+                                         h.expiration + ".")
         elif event in 'Export':
             try:
                 if lastevent == event:      # if both last and current events were exports

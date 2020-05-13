@@ -8,46 +8,16 @@ class Herb:
     def __init__(self):
 
         self.color = self.getColor()
-        self.name = self.getName(self.color)
+        self.type = self.getType()
+        self.name = self.getName(self.color, self.type)
         self.origin = self.getOrigin(self.name)
         self.rarity = self.getRarity()
         self.use = self.getUse()
-        self.preparation = self.getPrep(self.name, self.use)
+        self.preparation = self.getPrep(self.type, self.use)
         self.expiration = self.getExpiration()
         self.delivery = self.getDelivery()
 
-    def getName(self, c):
-        h_name = ""
-        r1 = random.randint(1, 2)
-        r2 = random.randint(1, 2)
-
-        # Generate Adjective
-        adjectives = "Arctic", "Burning", "Dawn", "Dusk", "Earth", "Elder", "Frozen", "Great", "Grave", "Ice", "Moon", "Morning", "Mountain", "Muck", "Night", "Rain", "Shadow", "Sun", "Swamp", "Water", "Wind"
-        adj_rand = random.randint(0, 20)       # 21
-        if r1 == 2:
-            # todo: filter out generic color if taken in (e.g., Dark Greenish Blue == Blue)
-            color_words = c.split()     # creates tuples of all words in string
-            c = color_words[-1]     # saves last tuple value into c
-            h_name += c + " "      # Randomly adds in color
-        h_name += adjectives[adj_rand] + " "       # Appends adjective to full name string
-
-        # Generate Noun
-        nouns = "Bark", "Berry", "Blossom", "Bulb", "Flower", "Fruit", "Leaf", "Lily", "Moss", "Needle", "Nut", "Pollen", "Petal", "Root", "Rose", "Sap", "Seed", "Stalk", "Stem", "Thorn", "Vine", "Weed"
-        noun_rand = random.randint(0, 21)   # 22
-        # todo: separate strict base herb types ( Bark, berry, nut ) to be usable only as suffixes or solo. Possibly create new function to generate/save.
-        if r2 == 2:
-            while True:
-                noun_rand2 = random.randint(0, 20)   # 21
-                if noun_rand != noun_rand2:
-                    break
-            h_name += nouns[noun_rand] + nouns[noun_rand2].lower()
-        else:
-            h_name += nouns[noun_rand]
-
-        return h_name
-
     def getColor(self):
-        h_color = ""
         colors = "Black", "Blue", "Brown", "Copper", "Gold", "Green", "Grey", "Pink", "Purple", "Orange", "Red", "Silver", "White", "Yellow"
         color_primary = random.randint(0, 13)   # 14
         color_descriptor = random.randint(1, 3)
@@ -67,8 +37,51 @@ class Herb:
             # todo: more descriptive primaries based on individual rolls: turquoise, magenta, garnet, teal, etc.
         return h_color
 
+    def getType(self):
+        herbs = ["Bark", "Berry", "Blossom", "Bulb", "Cap", "Flower", "Fruit", "Frond", "Leaf", "Lily", "Lotus", "Moss",
+                 "Mushroom", "Needle", "Nut", "Pollen", "Petal", "Root", "Rose", "Sap", "Seed", "Stalk", "Stem", "Thorn",
+                 "Tulip", "Vine", "Weed"]
+        herbs_rand = random.randint(0, 26)
+        h_type = herbs[herbs_rand]
+        return h_type
+
+    def getName(self, c, t):
+        h_name = ''
+        r1 = random.randint(0, 2)
+        add_noun_descriptor = random.randint(0, 1)
+
+        # Generate Adjective
+        adjectives = ['Arctic', 'Bright', 'Burning', 'Dark', 'Dancing', 'Dusty', 'Earth', 'Elder', 'Frozen', 'Great',
+                      'Hard', 'Soft', 'Stinging']
+        adj_rand = random.randint(0, 12)
+        if r1 == 0:             # add color
+            # todo: filter out generic color if taken in (e.g., Dark Greenish Blue == Blue)
+            color_words = c.split()     # creates tuples of all words in string
+            c = color_words[-1]         # saves last tuple value into c
+            h_name += c + " "           # Randomly adds in color
+        elif r1 == 1:           # add adjectives
+            h_name += adjectives[adj_rand] + " "        # Appends adjective to full name string
+        else:           # add color and adjectives
+            color_words = c.split()                     # creates tuples of all words in string
+            c = color_words[-1]                         # saves last tuple value into c
+            h_name += c + " "                           # Randomly adds in color
+            h_name += adjectives[adj_rand] + " "        # Appends adjective to full name string
+
+        # Generate descriptive noun -- SEPARATE FROM HERB TYPE from getType()
+        nouns = ['Dawn', 'Dusk', 'Fire', 'Grave', 'Ice', 'Moon', 'Morning', 'Mountain', 'Muck', 'Mud', 'Night', 'Raid',
+                 'Rock', 'Sand', 'Shadow', 'Sun', 'Swamp', 'Water', 'Wind']
+        if add_noun_descriptor == 1:
+            while True:
+                noun_rand = random.randint(0, 18)
+                if nouns[noun_rand] != t:
+                    break
+            h_name += nouns[noun_rand] + t.lower()
+        else:
+            h_name += t
+
+        return h_name
+
     def getOrigin(self, n):
-        h_origin = ""
         origins = "Tundra", "Desert", "Jungle or Swamp", "Forestation", "Mountains", "Grasslands", "Underground", "Fresh Water", "Salt Water"
 
         # todo: polish up fresh water and salt water filtering
@@ -83,7 +96,7 @@ class Herb:
             while True:
                 origin_rand = random.randint(0, 8)
                 h_origin = origins[origin_rand]
-                if h_origin == "Forestation" or h_origin == "Jungle/Swamp":
+                if h_origin == "Forestation" or h_origin == "Jungle or Swamp":
                     break
         else:
             while True:
@@ -103,7 +116,7 @@ class Herb:
 
         return rarity
 
-    def getPrep(self, name, use):
+    def getPrep(self, type, use):
         h_preparation = "in some way"
         # todo how it alchemically prepared (should align with herb type and use)
         preps = ['a thick paste', 'a thin paste', 'a rough powder', 'a fine powder', 'an oily liquid',
@@ -111,7 +124,6 @@ class Herb:
         return h_preparation
 
     def getUse(self):
-        h_use = "use and effect"
         # todo more uses and effects
         r_use = random.randint(0, 2)    # get use
         use = ['an ailment', 'a poison', 'a drug']
