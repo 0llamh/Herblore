@@ -16,30 +16,28 @@ window = ui.Window('Herblore', layout)
 
 
 def main():
+    lastevent = ''          # define error checker variable pre-loop
     while True:
         event, values = window.read()
         if event in (None, 'Exit'):
             break
         elif event in 'Create Herb':
-            # print('herb created')
             h = Herb.Herb()
             window["name"].update(h.name)
             window["rarity"].update("Herb Rarity: %i" % h.rarity)
             # todo: attribute specific descriptions based on texture and origins
             window["description"].update("A " + h.color + " herb from the " + h.origin.lower())
         elif event in 'Export':
-            # todo: catch duplicate herb exports.
-            # todo: send error reports to a dialog, so generated herb isnt lost
             try:
-                Catalog.write(h)
+                if lastevent == event:      # if both last and current events were exports
+                    ui.popup_error('Herb already exported. Please generate another.', title='Export Error')
+                else:               # otherwise just export like normal
+                    Catalog.write(h)
             except(UnboundLocalError):
-                window["name"].update("ERROR")
-                window["rarity"].update("")
-                window["description"].update("Generate an herb before exporting.")
+                ui.popup_error('Generate an herb before exporting', title='Export Error')
             except(xlsxwriter.exceptions.FileCreateError):
-                window["name"].update("ERROR")
-                window["rarity"].update("")
-                window["description"].update("Spreadsheet currently open in another process.")
+                ui.popup_error("Spreadsheet currently open in another process. Please close it.", title='Export Error')
+        lastevent = event           # save what happened this event loop for the next (duplicate export checking)
 
     window.close()
 
