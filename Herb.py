@@ -17,7 +17,7 @@ class Herb:
         self.delivery = self.getDelivery()
 
     def getName(self, c):
-        fname = ""
+        h_name = ""
         r1 = random.randint(1, 2)
         r2 = random.randint(1, 2)
 
@@ -28,8 +28,8 @@ class Herb:
             # todo: filter out generic color if taken in (e.g., Dark Greenish Blue == Blue)
             color_words = c.split()     # creates tuples of all words in string
             c = color_words[-1]     # saves last tuple value into c
-            fname += c + " "      # Randomly adds in color
-        fname += adjectives[adj_rand] + " "       # Appends adjective to full name string
+            h_name += c + " "      # Randomly adds in color
+        h_name += adjectives[adj_rand] + " "       # Appends adjective to full name string
 
         # Generate Noun
         nouns = "Bark", "Berry", "Blossom", "Bulb", "Flower", "Fruit", "Leaf", "Lily", "Moss", "Needle", "Nut", "Pollen", "Petal", "Root", "Rose", "Sap", "Seed", "Stalk", "Stem", "Thorn", "Vine", "Weed"
@@ -40,14 +40,14 @@ class Herb:
                 noun_rand2 = random.randint(0, 20)   # 21
                 if noun_rand != noun_rand2:
                     break
-            fname += nouns[noun_rand] + nouns[noun_rand2].lower()
+            h_name += nouns[noun_rand] + nouns[noun_rand2].lower()
         else:
-            fname += nouns[noun_rand]
+            h_name += nouns[noun_rand]
 
-        return fname
+        return h_name
 
     def getColor(self):
-        fColor = ""
+        h_color = ""
         colors = "Black", "Blue", "Brown", "Copper", "Gold", "Green", "Grey", "Pink", "Purple", "Orange", "Red", "Silver", "White", "Yellow"
         color_primary = random.randint(0, 13)   # 14
         color_descriptor = random.randint(1, 3)
@@ -56,45 +56,45 @@ class Herb:
             # Light
             pale_or_light = random.randint(1, 2)
             if pale_or_light == 1:
-                fColor = "Pale " + colors[color_primary]
+                h_color = "Pale " + colors[color_primary]
             else:
-                fColor = "Light " + colors[color_primary]
+                h_color = "Light " + colors[color_primary]
         elif color_descriptor == 2:
             # Dark
-            fColor = "Dark " + colors[color_primary]
+            h_color = "Dark " + colors[color_primary]
         else:
-            fColor = colors[color_primary]
+            h_color = colors[color_primary]
             # todo: more descriptive primaries based on individual rolls: turquoise, magenta, garnet, teal, etc.
-        return fColor
+        return h_color
 
     def getOrigin(self, n):
-        fOrigin = ""
+        h_origin = ""
         origins = "Tundra", "Desert", "Jungle or Swamp", "Forestation", "Mountains", "Grasslands", "Underground", "Fresh Water", "Salt Water"
 
         # todo: polish up fresh water and salt water filtering
         # Run a loop to ensure name corroborates its origin
         if ("Arctic" in n) or ("Ice" in n) or ("Frozen" in n):
-            fOrigin = "Tundra"
+            h_origin = "Tundra"
         elif ("Swamp" in n) or ("Muck" in n):
-            fOrigin = "Jungle or Swamp"
+            h_origin = "Jungle or Swamp"
         elif "Mountain" in n:
-            fOrigin = "Mountains"
+            h_origin = "Mountains"
         elif ("Bark" in n) or ("Sap" in n) or ("Moss" in n) or ("Vine" in n):
             while True:
                 origin_rand = random.randint(0, 8)
-                fOrigin = origins[origin_rand]
-                if fOrigin == "Forestation" or fOrigin == "Jungle/Swamp":
+                h_origin = origins[origin_rand]
+                if h_origin == "Forestation" or h_origin == "Jungle/Swamp":
                     break
         else:
             while True:
                 origin_rand = random.randint(0, 8)
-                fOrigin = origins[origin_rand]
-                if ("Water" in fOrigin) and (("Bark" in n) or ("Sap" in n) or ("Pollen" in n)):
+                h_origin = origins[origin_rand]
+                if ("Water" in h_origin) and (("Bark" in n) or ("Sap" in n) or ("Pollen" in n)):
                     continue
                 else:
                     break
 
-        return fOrigin
+        return h_origin
 
     def getRarity(self):
         rarity = 10     # base Dice check value on herbalism rolls
@@ -104,25 +104,25 @@ class Herb:
         return rarity
 
     def getTexture(self, n):
-        hTexture = ""
+        h_texture = ""
         # todo texture
 
-        return hTexture
+        return h_texture
 
     def getUse(self):
-        hUse = ""
+        h_use = ""
         # todo use
 
-        return hUse
+        return h_use
 
     def getExpiration(self):
-        hExpire = ""
+        h_expire = ""
         # todo expiration
 
-        return hExpire
+        return h_expire
 
     def getDelivery(self):
-        hDeliv = ""
+        h_deliv = ""
         # todo delivery
 
-        return hDeliv
+        return h_deliv
