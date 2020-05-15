@@ -13,9 +13,9 @@ class Herb:
         self.origin = self.getOrigin(self.name)
         self.rarity = self.getRarity()
         self.use = self.getUse()
-        self.preparation = self.getPrep(self.type, self.use)
+        self.preparation = self.getPrep(self.type)
         self.expiration = self.getExpiration()
-        self.delivery = self.getDelivery()
+        self.delivery = self.getDelivery(self.preparation)
 
     def getColor(self):
         colors = "Black", "Blue", "Brown", "Copper", "Gold", "Green", "Grey", "Pink", "Purple", "Orange", "Red", "Silver", "White", "Yellow"
@@ -110,6 +110,48 @@ class Herb:
 
         return rarity
 
+    def getPrep(self, type):
+        h_preparation = ''
+        preps = ['Raw', 'Vigorously mixing', 'Boiling slowly', 'Boiling rapidly', 'Roasting', 'Smoking', 'Sun-drying',
+                 'Soaking', 'Brining', 'Brewing', 'Steeping', 'Crushing', 'Crystallizing']
+        r_preps = random.randint(0, 12)
+        # todo how it alchemically prepared (should align with herb type and use)
+
+        h_preparation += preps[r_preps]
+
+        return h_preparation
+
+
+    def getDelivery(self, prep):
+        h_deliv = ''
+        # todo delivery
+        deliveries = ['Thick paste', 'Thin paste', 'Rough powder', 'Fine powder', 'Oily liquid',
+                      'Gloopy liquid', 'Balm', 'Lotion', 'Course crystals']
+        if prep == 'Raw':
+            h_deliv = 'Raw'
+            # todo: specific raw deliveries based on herb.type
+        elif prep == 'Brewing':
+            h_deliv = 'Fermented liquid'
+        elif prep == 'Steeping':
+            h_deliv = 'Tea'
+        elif prep == 'Crystallizing':
+            h_deliv = 'Course crystals'
+        else:
+            r_deliv = random.randint(0, 8)
+            h_deliv = deliveries[r_deliv]
+
+        return h_deliv
+
+    def getExpiration(self):
+        h_expiration = ""
+        expirations = ['Immediately', 'Hours', 'Days', 'A year', 'No expiration']
+        rand_expire = random.randint(0, 4)
+        if rand_expire == 4:
+            h_expiration = 'No expiration'
+        else:
+            h_expiration += expirations[rand_expire]
+        return h_expiration
+
     def getUse(self):
         # todo more uses and effects
         r_use = random.randint(0, 2)    # get use
@@ -133,26 +175,3 @@ class Herb:
             drugs   = ['euphoriant', 'sensory stimulant', 'steroid', 'hallucinogen']
             h_use += " commonly used as a " + drugs[r_drug]
         return h_use
-
-    def getPrep(self, type, use):
-        h_preparation = "in some way"
-        # todo how it alchemically prepared (should align with herb type and use)
-        preps = ['a thick paste', 'a thin paste', 'a rough powder', 'a fine powder', 'an oily liquid',
-                 'a thick, gloopy liquid', '']
-        return h_preparation
-
-    def getExpiration(self):
-        h_expiration = "best if used "
-        expirations = ['immediately', 'within hours', 'within days', 'within a year', 'no expiration']
-        rand_expire = random.randint(0, 4)
-        if rand_expire == 4:
-            h_expiration = 'with no expiration'
-        else:
-            h_expiration += expirations[rand_expire]
-        return h_expiration
-
-    def getDelivery(self):
-        h_deliv = ""
-        # todo delivery
-
-        return h_deliv

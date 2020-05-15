@@ -7,7 +7,8 @@ import xlsxwriter
 
 
 def write(herb):
-    h = [herb.name, herb.origin, herb.rarity, herb.color, herb.type, herb.use, herb.delivery, herb.expiration]
+    h = [herb.name, herb.origin, herb.rarity, herb.type, herb.color, herb.preparation, herb.delivery, herb.expiration, herb.use]
+    lastrow = 1
 
     if path.exists('Herbs.xlsx'):
         # print('Herbs.xlsx already exists.')
@@ -34,7 +35,7 @@ def write(herb):
     else:
         #SPREADSHEET DOES NOT EXIST.
         #DEFINE HEADER ROW
-        header = ['Herb Name', 'Origin', 'Rarity', 'Color', 'Texture', 'Use', 'Delivery', 'Expiration']     # header cell values
+        header = ['Herb Name', 'Origin', 'Rarity', 'Type', 'Color', 'Preparation', 'Delivery', 'Expiration', 'Use']     # header cell values
         workbook = xlsxwriter.Workbook('Herbs.xlsx')        # creates workbook obj
         headerformat = workbook.add_format({'bold': True, 'font_name': 'Segoe UI Semibold', 'font_size': 15, 'bg_color': '#00c462', 'bottom': 1})
         worksheet = workbook.add_worksheet('Herbs.xlsx')
@@ -42,11 +43,15 @@ def write(herb):
         worksheet.write_row(1, 0, h)            # write row 2, starting at column 1, with herb values
 
     worksheet.set_row(0, 40)  # set row 1 height to 40
-    worksheet.set_column('A:A', 30)  # set name column width to 2.0
+    worksheet.set_column('A:A', 25)  # set name column width to 2.0
     worksheet.set_column('B:B', 20)  # origin column
     worksheet.set_column('C:C', 10)  # rarity
-    worksheet.set_column('D:H', 15)  # color, texture, use, deliver, expiration
-    worksheet.autofilter('A1:D11')   # filter functionality in the headers for easy sorting
+    worksheet.set_column('D:D', 12)  # type
+    worksheet.set_column('E:F', 15)  # color, preparation
+    worksheet.set_column('G:H', 15)  # delivery, expiration
+    worksheet.set_column('I:I', 30)  # use
+    # worksheet.autofilter('A1:D11')   # filter functionality in the headers for easy sorting
+    worksheet.autofilter(0, 0, lastrow, 8)
 
     # todo: implement parser to each herb row with specific background colors
 
