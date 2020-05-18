@@ -55,7 +55,6 @@ class Herb:
                       'Hard', 'Soft', 'Stinging']
         adj_rand = random.randint(0, 12)
         if r1 == 0:             # add color
-            # todo: filter out generic color if taken in (e.g., Dark Greenish Blue == Blue)
             color_words = c.split()     # creates tuples of all words in string
             c = color_words[-1]         # saves last tuple value into c
             h_name += c + " "           # Randomly adds in color
@@ -115,7 +114,7 @@ class Herb:
         preps = ['Raw', 'Vigorously mixing', 'Boiling slowly', 'Boiling rapidly', 'Roasting', 'Smoking', 'Sun-drying',
                  'Soaking', 'Brining', 'Brewing', 'Steeping', 'Crushing', 'Crystallizing']
         r_preps = random.randint(0, 12)
-        # todo how it alchemically prepared (should align with herb type and use)
+        # todo how its alchemically prepared (should align with herb type and use)
 
         h_preparation += preps[r_preps]
 
@@ -124,7 +123,6 @@ class Herb:
 
     def getDelivery(self, prep):
         h_deliv = ''
-        # todo delivery
         deliveries = ['Thick paste', 'Thin paste', 'Rough powder', 'Fine powder', 'Oily liquid',
                       'Gloopy liquid', 'Balm', 'Lotion', 'Course crystals']
         if prep == 'Raw':

@@ -50,7 +50,6 @@ def write(herb):
     worksheet.set_column('E:F', 15)  # color, preparation
     worksheet.set_column('G:H', 15)  # delivery, expiration
     worksheet.set_column('I:I', 30)  # use
-    # worksheet.autofilter('A1:D11')   # filter functionality in the headers for easy sorting
     worksheet.autofilter(0, 0, lastrow, 8)
 
     # todo: implement parser to each herb row with specific background colors
