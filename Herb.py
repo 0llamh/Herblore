@@ -84,7 +84,7 @@ class Herb:
     def getOrigin(self, n):
         h_origin = ''
         origins = ['Ice and Snow', 'Forestation', 'Marshes and Swamps', 'Grass', 'Lakes and Rivers', 'Underground',
-                   'Bushes and Shrubs', 'Desert', 'Mountains and Cliffs']
+                   'Bushes and Shrubs', 'Deserts and Wastelands', 'Mountains and Cliffs']
         # todo: filter out terrains based on type and adjectives
         # Run a loop to ensure name corroborates its origin
         while h_origin == '':
