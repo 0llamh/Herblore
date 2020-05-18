@@ -108,8 +108,6 @@ def main():
                     ui.popup_error('Herb already exported. Please generate another.', title='Export Error')
                 else:               # otherwise just export like normal
                     Catalog.write(h)
-            except(UnboundLocalError):
-                ui.popup_error('Generate an herb before exporting', title='Export Error')
             except(xlsxwriter.exceptions.FileCreateError):
                 ui.popup_error("Spreadsheet currently open in another process. Please close it.", title='Export Error')
         lastevent = event           # save what happened this event loop for the next (duplicate export checking)
