@@ -19,7 +19,7 @@ layout = [[ui.Text('Generate an herb!')],
 window = ui.Window('Herblore', layout)
 
 def main():
-    lastevent = ''          # define error checker variable pre-loop
+    already_exported = False          # define error checker variable pre-loop
     while True:
         event, values = window.read()
         if event in (None, 'Exit'):
@@ -104,13 +104,13 @@ def main():
             window["export"].update(visible=True)       # show the export button after generation
         elif event in 'Export':
             try:
-                if lastevent == event:      # if both last and current events were exports
+                if already_exported:      # if both last and current events were exports
                     ui.popup_error('Herb already exported. Please generate another.', title='Export Error')
                 else:               # otherwise just export like normal
                     Catalog.write(h)
+                    already_exported = True  # save what happened this event loop for the next (duplicate export checking)
             except(xlsxwriter.exceptions.FileCreateError):
                 ui.popup_error("Spreadsheet currently open in another process. Please close it.", title='Export Error')
-        lastevent = event           # save what happened this event loop for the next (duplicate export checking)
 
     window.close()
 
